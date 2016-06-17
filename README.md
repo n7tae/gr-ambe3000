@@ -32,4 +32,8 @@ And if you don't want the ambe3000 blocks anymore...
 
 `sudo make uninstall` // (in the build directory) to remove the ambe 3000 blocks from grc
 
+## Warning
+
+This is a work in progress. You can't yet go from audio source to transmitter in a single flow-graph as I am using blocking I/O to the dongle. Lots of fun work to do...
+
 73 Tom AC2IE
