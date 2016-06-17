@@ -1,0 +1,7 @@
+/*!
+ * \defgroup block GNU Radio AMBE3000 C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the AMBE3000 GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */
+

@@ -1,0 +1,30 @@
+INCLUDE(FindPkgConfig)
+PKG_CHECK_MODULES(PC_AMBE3000 ambe3000)
+
+FIND_PATH(
+    AMBE3000_INCLUDE_DIRS
+    NAMES ambe3000/api.h
+    HINTS $ENV{AMBE3000_DIR}/include
+        ${PC_AMBE3000_INCLUDEDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/include
+          /usr/local/include
+          /usr/include
+)
+
+FIND_LIBRARY(
+    AMBE3000_LIBRARIES
+    NAMES gnuradio-ambe3000
+    HINTS $ENV{AMBE3000_DIR}/lib
+        ${PC_AMBE3000_LIBDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/lib
+          ${CMAKE_INSTALL_PREFIX}/lib64
+          /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(AMBE3000 DEFAULT_MSG AMBE3000_LIBRARIES AMBE3000_INCLUDE_DIRS)
+MARK_AS_ADVANCED(AMBE3000_LIBRARIES AMBE3000_INCLUDE_DIRS)
+
