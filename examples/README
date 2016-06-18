@@ -1,0 +1,23 @@
+This directory contains several flow-graphs to get you going. Some that transmit RF obviously require an SDR with an rf sink, i.e., a transmitter. These examples use a UHD (I have an Ettus Research B200). If you have a different rf sink, you will need to change the example by removing the UHD and adding your rf sink. In general rf sinks will not work with any input sampling rate, so you may have to play with the examples a bit if gnuradio reports any trouble with setting clock rates. The error and warning messages do a good job of pointing you to the correct solution. If you use a transmitting flow-graph, you should have a amateur radio license.
+
+The examples:
+
+1. audio2file.grc – This flow-graph uses the dstar_encode_sb module to convert the output of an audio source and writes the dstar data (just 600 bytes for each second of audio) to a named file. Start the flow-graph and when it runs speak into the default audio input. When you are done, click the “x” in the run window to stop. The dstar stream contains no header, no “slow data” and no terminating flag.
+
+2. file2audio.grc – This uses dstar_decode_bs to convert a named file as a source of dstar data. Currently this data may not contain a header. Any slow data will not be processed. Select the file and then start the flow-graph to hear the recorded audio.
+
+3. file2rf.grc – This will read dstar data from a named file and send it to a UHD transmitting sink. Because the gnuradio GMSK modulators consume bytes from the least-significant side first, these modulators need to be preceded with the bit_reverse_bb block.
+
+4. audio2rf.grc – This will take audio from the default audio source and encode it using dstar_encode_sb and send it to a UHD sink. Currently all I/O to the DV3000U dongle is through blocking calls that greatly simplify the code. This comes at a price. Without the Delay block, the flow-graph will fail on my system with “U” buffer underflows reported. Inserting just 24 null bytes of delay (two DV frames or 40 milliseconds) results in reliable operation. (Your mileage may vary, depending on you computer and its hardware.) I have the older DV3000U dongle that can only operate at 230400 baud. If you have a newer dongle that operates at 460800 baud, you might be able to significantly reduce or completely eliminate the delay.
+
+I don’t yet have an rf2audio.grc flow-graph. I need to figure out how to sync the incoming bits from the GMSK demodulator to the DV audio frame sync flag. I’m still very much a novice student of gnuradio!
+
+
+
+
+
+
+
+
+
+Copyright 2016 Thomas A Early AC2IE
