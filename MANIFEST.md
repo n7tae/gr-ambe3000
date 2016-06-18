@@ -14,15 +14,7 @@ website: http://nwdigitalradio.com
 ---
 Uses the Northwest Digital Radio USB AMBE3000 dongle to encode and decode between audio and DStar data. The encoder builds a DStar data stream from an 8000 sample/second, 16-bit integer audio stream. The decoder converts a DStar data stream to a 8000 sample/second, 16-bit integer audio stream.
 
-Three example flowgraphs are include (1) encoding an audio source to DStar stream captured by a file, (2) reading a DStar stream from a file and decoding it to audio, and (3) writing the dstar file to a UHD sink (transmitting!).
-
-If you have a different TX-ing device, you'll need to use it instead of the UHD. If your device doesn't support a 480 kHz input rate, you'll need to fiddle with the parameters in this flow graph. To transmit RF, you will also need an amateur radio license.
-
-The DStar stream uses 12 byte frames with 20 milliseconds of audio encoded in the first 9 bytes (72 bits) of the frame. Currently he remaining 3 bytes have no useful content, except that every 21st frame is a sync flag.
-
-The data stream has no DStar header and no terminating flag, so if you try the transmitter flowgraph, you'll see no "slow data" text on your DStar receiver and your recevier will beep at the end of the transmission becasuse the data streem is not properly terminated.
-
-You can't have both the encoder and the decoder in a single flowgraph, so make a transmitter or a receiver, but not a transceiver. The gnuradio GMSK modulators start from the least significant byte, so you'll need to use the included bit reverser before the modulator for any transmission that is going to be received by a commercial receiver. See the flowgraphs in the examples folder.
+See the README file in the examples directory for an explanation of the included flow-graphs.
 
 **Install guide**  
 
@@ -40,4 +32,8 @@ And if you don't want the ambe3000 blocks anymore...
 
 `sudo make uninstall` // (in the build directory) to remove the ambe 3000 blocks from grc
 
-73 Tom AC2IE
+I welcome comments and complaints, but moslty I welcome push notifications for improvements.
+
+Thanks to the folks at NorthWest Digital Radio, especially ambeserver.c. If you find this software useful, it's because of them. If you don't, it's probably my fault!
+
+73 Tom AC2IE  <ac2ie (at) arrl (dot) net

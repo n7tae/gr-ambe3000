@@ -6,9 +6,7 @@ This will build a gnuradion OOT (out-of-tree) module to encode and decode a DSta
 
 It uses the Northwest Digital Radio USB AMBE3000 (http://www.nwdigitalradio.com) dongle to encode and decode between audio and DStar data. The encoder builds a DStar data stream from an 8000 sample/second, 16-bit integer audio stream. The decoder converts a DStar data stream to a 8000 sample/second, 16-bit integer audio stream.
 
-Three example flowgraphs are include (1) encoding an audio source to DStar stream captured by a file, (2) reading a DStar stream from a file and decoding it to audio, and (3) writing the dstar file to a UHD sink (transmitting!).
-
-If you have a different TX-ing device, you'll need to use it instead of the UHD. If your device doesn't support a 480 kHz input rate, you'll need to fiddle with the parameters in this flow graph. To transmit RF, you will also need an amateur radio license.
+See the README file in the "examples" folder for an explanation of the example flow-graphs.
 
 The DStar stream uses 12 byte frames with 20 milliseconds of audio encoded in the first 9 bytes (72 bits) of the frame. Currently he remaining 3 bytes have no useful content, except that every 21st frame is a sync flag.
 
