@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <block>
-  <name>bit_reverse_bb</name>
+  <name>Bit Reverse</name>
   <key>ambe3000_bit_reverse_bb</key>
-  <category>ambe3000</category>
+  <category>AMBE-3000 Dongle</category>
   <import>import ambe3000</import>
   <make>ambe3000.bit_reverse_bb()</make>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.

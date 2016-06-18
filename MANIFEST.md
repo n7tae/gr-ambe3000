@@ -8,11 +8,10 @@ author:
   - Thomas Early <ac2ie (at) arrl (dot) net>
 copyright_owner:
   - Thomas A. Early
-#license:
 repo: http://github.com/ac2ie/gr-ambe3000
 website: http://nwdigitalradio.com
 ---
-Uses the Northwest Digital Radio USB AMBE3000 dongle to encode and decode between audio and DStar data. The encoder builds a DStar data stream from an 8000 sample/second, 16-bit integer audio stream. The decoder converts a DStar data stream to a 8000 sample/second, 16-bit integer audio stream.
+Uses the Northwest Digital Radio USB AMBE-3000 dongle to encode and decode between audio and DStar data. The encoder builds a DStar data stream from an 8000 sample/second, 16-bit integer audio stream. The decoder converts a DStar data stream to a 8000 sample/second, 16-bit integer audio stream.
 
 See the README file in the examples directory for an explanation of the included flow-graphs.
 
