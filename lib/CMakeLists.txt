@@ -27,6 +27,8 @@ link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND ambe3000_sources
     dstar_encode_sb_impl.cc
     DV3000U.cc
+    DStarHeader.cc
+    DStarDecode.cc
     dstar_decode_bs_impl.cc
     bit_reverse_bb_impl.cc )
 

@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2016 <+YOU OR YOUR COMPANY+>.
+ * Copyright 2016 Thomas Early AC2IE.
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,8 @@ namespace gr {
               gr::io_signature::make(1, 1, sizeof(unsigned char)),
               gr::io_signature::make(1, 1, sizeof(short)))
     {
-		device_is_closed = dv3000u.OpenDevice(device, baudrate);
+		device_is_closed = dstarDecode.OpenDevice(device, baudrate);
+		printf("%s is %s.\n", device, device_is_closed ? "closed" : "opened");
 		set_output_multiple(160);
 	}
 
@@ -53,13 +54,13 @@ namespace gr {
      */
     dstar_decode_bs_impl::~dstar_decode_bs_impl()
     {
-		dv3000u.CloseDevice();
+		dstarDecode.CloseDevice();
     }
 
     void
     dstar_decode_bs_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-      ninput_items_required[0] = 12 * noutput_items / 160;
+      ninput_items_required[0] = 96 * noutput_items / 160;
     }
 
     int
@@ -75,14 +76,14 @@ namespace gr {
 		return WORK_DONE;
       // Do <+signal processing+>
       for (int i=0; i<noutput_items; i+=160) {
-		  if (dv3000u.DecodeData(in, out))
+		  if (dstarDecode.Process(in, out))
 			return WORK_DONE;
-		  in += 12;
+		  in += 96;
 		  out += 160;
 	  }
       // Tell runtime system how many input items we consumed on
       // each input stream.
-      consume_each (12 * noutput_items / 160);
+      consume_each (96 * noutput_items / 160);
 
       // Tell runtime system how many output items we produced.
       return noutput_items;

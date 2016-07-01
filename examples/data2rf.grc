@@ -124,11 +124,11 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>0</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(424, 97)</value>
+      <value>(424, 153)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -167,7 +167,7 @@
     </param>
     <param>
       <key>file</key>
-      <value></value>
+      <value>/home/tom/projects/test/ambebits.2trim</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -206,7 +206,7 @@
     <key>digital_gmsk_mod</key>
     <param>
       <key>bt</key>
-      <value>0.35</value>
+      <value>0.5</value>
     </param>
     <param>
       <key>alias</key>
@@ -1444,6 +1444,12 @@
   <connection>
     <source_block_id>blocks_file_source_0</source_block_id>
     <sink_block_id>ambe3000_bit_reverse_bb_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_file_source_0</source_block_id>
+    <sink_block_id>digital_gmsk_mod_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

@@ -22,7 +22,7 @@
 #define INCLUDED_AMBE3000_DSTAR_DECODE_BS_IMPL_H
 
 #include <ambe3000/dstar_decode_bs.h>
-#include "DV3000U.h"
+#include "DStarDecode.h"
 
 namespace gr {
   namespace ambe3000 {
@@ -30,7 +30,7 @@ namespace gr {
     class dstar_decode_bs_impl : public dstar_decode_bs
     {
      private:
-      CDV3000U dv3000u;
+      CDStarDecode dstarDecode;
       bool device_is_closed;
 
      public:
