@@ -25,7 +25,7 @@ class CDStarHeader {
 public:
 	//CDStarHeader();
 	CDStarHeader(unsigned char *in);
-	~CDStarHeader();
+//	~CDStarHeader();
 	const char *GetHeader();
 private:
 	unsigned char header[41];

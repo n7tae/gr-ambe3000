@@ -24,6 +24,7 @@
 
 #include <gnuradio/io_signature.h>
 #include "dstar_decode_bs_impl.h"
+#include <cstdio>
 
 namespace gr {
   namespace ambe3000 {
