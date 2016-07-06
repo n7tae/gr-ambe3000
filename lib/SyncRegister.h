@@ -21,18 +21,16 @@
  *   See https://github.com/argilo
  */
 
-class CDStarHeader {
+class CSyncRegister {
 public:
-	//CDStarHeader();
-	CDStarHeader(unsigned char *in);
-	~CDStarHeader();
-	const char *GetHeader();
+	CSyncRegister();
+	~CSyncRegister();
+	void Push(const unsigned char in);
+	bool IsHeadSync();
+	bool IsDataSync();
+	bool IsTermSync();
+	void GetDataFrame(unsigned char *frame);
 private:
-	unsigned char header[41];
-	void scramble(int *h1, int *h2);
-	void deinterleave(int *h1, int *h2);
-	void fec_decoder(int *h1, int *h2);
-	void traceBack(int *out, int *m_pathMemory0, int *m_pathMemory1, int *m_pathMemory2, int *m_pathMemory3);
-	void viterbiDecode (int n, int *data, int *m_pathMemory0, int *m_pathMemory1, int *m_pathMemory2, int *m_pathMemory3, int *m_pathMetric);
+	unsigned int data[3];	// 96 bits, 12 bytes
+	const unsigned char BitReverse(const unsigned char c);
 };
-

@@ -22,6 +22,7 @@
 #include <cassert>
 #include <cstring>
 #include <iostream>
+#include <cstdio>
 
 #include "DStarHeader.h"
 
@@ -55,60 +56,64 @@ CDStarHeader::CDStarHeader(unsigned char *in)
 	return;
 }
 
-// function traceBack
-//int CDStarHeader::traceBack(int *out, int *m_pathMemory0, int *m_pathMemory1, int *m_pathMemory2, int *m_pathMemory3)
-//{
-	//enum FEC_STATE { S0, S1, S2, S3 } state;
-	//int loop;
+CDStarHeader::~CDStarHeader()
+{
+}
+
+void CDStarHeader::traceBack(int *out, int *m_pathMemory0, int *m_pathMemory1, int *m_pathMemory2, int *m_pathMemory3)
+{
+	enum FEC_STATE { S0, S1, S2, S3 } state;
+	int loop;
 	//int length=0;
 
-	//state = S0;
+	state = S0;
 
-	//for (loop=329; loop >= 0; loop--, length++) {
+	for (loop=329; loop >= 0; loop--/*, length++*/) {
 
-		//switch (state) {
-			//case S0: // if state S0
-				//if (m_pathMemory0[loop]) {
-					//state = S2; // lower path
-				//} else {
-					//state = S0; // upper path
-				//}; // end else - if
-				//out[loop]=0;
-				//break;
+		switch (state) {
+			case S0: // if state S0
+				if (m_pathMemory0[loop]) {
+					state = S2; // lower path
+				} else {
+					state = S0; // upper path
+				};
+				out[loop]=0;
+				break;
 			
-			//case S1: // if state S1
-				//if (m_pathMemory1[loop]) {
-					//state = S2; // lower path
-				//} else {
-					//state = S0; // upper path
-				//}; // end else - if
-				//out[loop]=1;
-				//break;
+			case S1: // if state S1
+				if (m_pathMemory1[loop]) {
+					state = S2; // lower path
+				} else {
+					state = S0; // upper path
+				};
+				out[loop]=1;
+				break;
 			
-			//case S2: // if state S2
-				//if (m_pathMemory2[loop]) {
-					//state = S3; // lower path
-				//} else {
-					//state = S1; // upper path
-				//}; // end else - if
-				//out[loop]=0;
-				//break;
+			case S2: // if state S2
+				if (m_pathMemory2[loop]) {
+					state = S3; // lower path
+				} else {
+					state = S1; // upper path
+				};
+				out[loop]=0;
+				break;
 			
-			//case S3: // if state S3
-				//if (m_pathMemory3[loop]) {
-					//state = S3; // lower path
-				//} else {
-					//state = S1; // upper path
-				//}; // end else - if
-				//out[loop]=1;
-				//break;
+			case S3: // if state S3
+				if (m_pathMemory3[loop]) {
+					state = S3; // lower path
+				} else {
+					state = S1; // upper path
+				};
+				out[loop]=1;
+				break;
 			
-		//}
-	//}
-	//return length;
-//}
+		}
+	}
+	return;
+}
 
-void CDStarHeader::viterbiDecode (int n, int *data, int *m_pathMemory0, int *m_pathMemory1, int *m_pathMemory2, int *m_pathMemory3, int *m_pathMetric) {
+void CDStarHeader::viterbiDecode (int n, int *data, int *m_pathMemory0, int *m_pathMemory1, int *m_pathMemory2, int *m_pathMemory3, int *m_pathMetric)
+{
 	int tempMetric[4];
 	int metric[8];
 
@@ -116,10 +121,10 @@ void CDStarHeader::viterbiDecode (int n, int *data, int *m_pathMemory0, int *m_p
 	metric[1] = (data[1]^1) + (data[0]^1);
 	metric[2] = (data[1]^1) + (data[0]^0);
 	metric[3] = (data[1]^0) + (data[0]^1);
-	metric[4]=(data[1]^1)+(data[0]^1);
-	metric[5]=(data[1]^0)+(data[0]^0);
-	metric[6]=(data[1]^0)+(data[0]^1);
-	metric[7]=(data[1]^1)+(data[0]^0);
+	metric[4] = (data[1]^1) + (data[0]^1);
+	metric[5] = (data[1]^0) + (data[0]^0);
+	metric[6] = (data[1]^0) + (data[0]^1);
+	metric[7] = (data[1]^1) + (data[0]^0);
 
 	// Pres. state = S0, Prev. state = S0 & S2
 	int m1 = metric[0] + m_pathMetric[0];
@@ -177,10 +182,10 @@ void CDStarHeader::fec_decoder(int *in, int *out)
 	int m_pathMemory1[330];
 	int m_pathMemory2[330];
 	int m_pathMemory3[330];
-	memset(m_pathMemory0,0,330 * sizeof(int));
-	memset(m_pathMemory1,0,330 * sizeof(int));
-	memset(m_pathMemory2,0,330 * sizeof(int));
-	memset(m_pathMemory3,0,330 * sizeof(int));
+	memset(m_pathMemory0, 0, 330 * sizeof(int));
+	memset(m_pathMemory1, 0, 330 * sizeof(int));
+	memset(m_pathMemory2, 0, 330 * sizeof(int));
+	memset(m_pathMemory3, 0, 330 * sizeof(int));
 	int m_pathMetric[4];
 
 
@@ -208,18 +213,7 @@ void CDStarHeader::fec_decoder(int *in, int *out)
 		viterbiDecode(n, data, m_pathMemory0, m_pathMemory1, m_pathMemory2, m_pathMemory3, m_pathMetric);
 	}
 
-	//int outLen=traceBack(out, m_pathMemory0, m_pathMemory1, m_pathMemory2, m_pathMemory3);
-
-	// Swap endian-ness
-	// code removed (done converting bits into octets), done in main program
-
-	//for (loop=0;loop<330;loop+=8) {
-	//	int temp;
-	//	temp=out[loop];out[loop]=out[loop+7];out[loop+7]=temp;
-	//	temp=out[loop+1];out[loop+1]=out[loop+6];out[loop+6]=temp;
-	//	temp=out[loop+2];out[loop+2]=out[loop+5];out[loop+5]=temp;
-	//	temp=out[loop+3];out[loop+3]=out[loop+4];out[loop+4]=temp;
-	//}
+	traceBack(out, m_pathMemory0, m_pathMemory1, m_pathMemory2, m_pathMemory3);
 
 	return;
 }
@@ -229,7 +223,7 @@ void CDStarHeader::deinterleave(int *in, int *out)
 {
 	// init vars
 	int k=0;
-	for (int loop=0;loop<660;loop++) {
+	for (int loop=0; loop<660; loop++) {
 		out[k]=in[loop];
 
 		k += 24;
@@ -243,7 +237,7 @@ void CDStarHeader::deinterleave(int *in, int *out)
 	return;
 }
 
-void CDStarHeader::scramble (int * in, int * out)
+void CDStarHeader::scramble (int *in, int *out)
 {
 	static const int SCRAMBLER_TABLE_BITS[] = {
 		0,0,0,0,1,1,1,0,1,1,1,1,0,0,1,0,1,1,0,0,1,0,0,1,0,0,0,0,0,0,1,0,
@@ -278,7 +272,7 @@ void CDStarHeader::scramble (int * in, int * out)
 		out[loop] = in[loop] ^ SCRAMBLER_TABLE_BITS[m_count++];
 
 		if (m_count >= SCRAMBLER_TABLE_BITS_LENGTH) {
-			m_count = 0U;
+			m_count = 0;
 		}
 	}
 	return;

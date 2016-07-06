@@ -45,7 +45,6 @@ namespace gr {
               gr::io_signature::make(1, 1, sizeof(short)))
     {
 		device_is_closed = dstarDecode.OpenDevice(device, baudrate);
-		printf("%s is %s.\n", device, device_is_closed ? "closed" : "opened");
 		set_output_multiple(160);
 	}
 

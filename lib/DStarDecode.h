@@ -21,6 +21,7 @@
  */
 
 #include "DV3000U.h"
+#include "SyncRegister.h"
 
 class CDStarDecode {
 public:
@@ -31,9 +32,9 @@ public:
 	void CloseDevice();
 private:
 	CDV3000U dv3000u;
+	CSyncRegister sr;
 
 	enum { headmode, datamode, nullmode } readmode;
 	unsigned char buffer[660];
-	int headflag, dataflag, termflag;
 	int index, voiceframecount;
 };

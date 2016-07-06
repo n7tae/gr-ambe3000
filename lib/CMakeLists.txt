@@ -29,6 +29,7 @@ list(APPEND ambe3000_sources
     DV3000U.cc
     DStarHeader.cc
     DStarDecode.cc
+    SyncRegister.cc
     dstar_decode_bs_impl.cc
     bit_reverse_bb_impl.cc )
 
