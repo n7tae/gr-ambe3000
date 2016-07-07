@@ -69,7 +69,11 @@ public:
 	~CDV3000U();
 	bool OpenDevice(char *ttyname, int baudrate);
 	bool EncodeAudio(const short *audio, unsigned char *data, int framecount);
+	bool SendAudio(const short *audio);
+	bool GetData(unsigned char *data, int framecount);
 	bool DecodeData(const unsigned char *data, short *audio);
+	bool SendData(const unsigned char *data);
+	bool GetAudio(short *audio);
 	void CloseDevice();
 private:
 	int fd;

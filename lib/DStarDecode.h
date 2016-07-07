@@ -37,4 +37,6 @@ private:
 	enum { headmode, datamode, nullmode } readmode;
 	unsigned char buffer[660];
 	int index, voiceframecount;
+	short int audiobuffer[160];
+	bool audio_ready;
 };

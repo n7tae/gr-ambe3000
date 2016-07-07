@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <fcntl.h>
+#include <cstring>
 
 #include "DStarDecode.h"
 #include "DStarHeader.h"
@@ -27,7 +28,8 @@
 CDStarDecode::CDStarDecode() :
 	index(0),
 	voiceframecount(0),
-	readmode(nullmode)
+	readmode(nullmode),
+	audio_ready(false)
 {
 }
 
@@ -49,7 +51,12 @@ void CDStarDecode::CloseDevice()
 
 bool CDStarDecode::Process(const unsigned char *in, short int *out)
 {
-	bool decoded = false;
+	if (audio_ready) {
+		memcpy(out, audiobuffer, 160*sizeof(short));
+		audio_ready = false;
+	} else {
+		memset(out, 0, 160*sizeof(short));
+	}
 	for (int inp=0; inp<96; inp++) {
 		unsigned char bit = in[inp];
 		if (headmode == readmode) {
@@ -60,10 +67,10 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 				const char *h = dsh.GetHeader();
 				printf("DSTAR HEADER: ");
 				//printf("FLAG1: %02X - FLAG2: %02X - FLAG3: %02X\n", h[0], h[1], h[2]);
-				printf("RPT2: %c%c%c%c%c%c%c%c ", h[3], h[4], h[5], h[6], h[7], h[8], h[9], h[10]);
-				printf("RPT1: %c%c%c%c%c%c%c%c ", h[11], h[12], h[13], h[14], h[15], h[16], h[17], h[18]);
+				printf("MY: %c%c%c%c%c%c%c%c/%c%c%c%c ", h[27], h[28], h[29], h[30], h[31], h[32], h[33], h[34], h[35], h[36], h[37], h[38]);
 				printf("YOUR: %c%c%c%c%c%c%c%c ", h[19], h[20], h[21], h[22], h[23], h[24], h[25], h[26]);
-				printf("MY: %c%c%c%c%c%c%c%c/%c%c%c%c\n", h[27], h[28], h[29], h[30], h[31], h[32], h[33], h[34], h[35], h[36], h[37], h[38]);
+				printf("RPT1: %c%c%c%c%c%c%c%c ", h[11], h[12], h[13], h[14], h[15], h[16], h[17], h[18]);
+				printf("RPT2: %c%c%c%c%c%c%c%c\n", h[3], h[4], h[5], h[6], h[7], h[8], h[9], h[10]);
 				voiceframecount = index = 0;
 				readmode = datamode;
 			}
@@ -73,8 +80,7 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 		if (datamode == readmode) {
 			if (++index >= 96) {
 				sr.GetDataFrame(buffer);
-				//printf("dataframe[%i]: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n", voiceframecount,
-				//	buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7], buffer[8], buffer[9], buffer[10], buffer[11]);
+				//printf("dataframe[%i]: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n", voiceframecount, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7], buffer[8], buffer[9], buffer[10], buffer[11]);
 				// voice frame is complete
 				if (sr.IsDataSync()) {	// is it a sync frame?
 					if (0 != voiceframecount++%21) {
@@ -88,9 +94,9 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 						readmode = nullmode;
 					}
 				}
-				if (dv3000u.DecodeData(buffer, out))
+				if (dv3000u.DecodeData(buffer, audiobuffer))
 					return true;
-				decoded = true;
+				audio_ready = true;
 				index = 0;
 			}
 		}
@@ -113,11 +119,10 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 				readmode = datamode;
 				index = 0;
 				sr.GetDataFrame(buffer);
-				//printf("dataframe[0]: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
-				//	buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7], buffer[8], buffer[9], buffer[10], buffer[11]);
-				if (dv3000u.DecodeData(buffer, out))
+				//printf("dataframe[0]: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7], buffer[8], buffer[9], buffer[10], buffer[11]);
+				if (dv3000u.DecodeData(buffer, audiobuffer))
 					return true;
-				decoded = true;
+				audio_ready = true;
 				voiceframecount = 1;
 			}
 		}
@@ -129,10 +134,5 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 		}
 	}
 
-	if (! decoded) {
-		for (int i=0; i<160; i++)
-			out[i] = (short int)0;
-	}
-
-	return false;
+	return false;	// SUCCESS!
 }

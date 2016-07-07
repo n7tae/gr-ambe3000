@@ -245,6 +245,15 @@ bool CDV3000U::getresponse(PDV3K_PACKET packet)
 
 bool CDV3000U::EncodeAudio(const short *audio, unsigned char *data, int framecount)
 {
+	if (SendAudio(audio))
+		return true;
+	if (GetData(data, framecount))
+		return true;
+	return false;
+}
+
+bool CDV3000U::SendAudio(const short *audio)
+{
 	// Create Audio packet based on input floats
 	DV3K_PACKET p;
 	p.start_byte = DV3K_START_BYTE;
@@ -258,10 +267,15 @@ bool CDV3000U::EncodeAudio(const short *audio, unsigned char *data, int framecou
 	// send audio packet to DV3000
 	int size = dv3k_packet_size(p);
 	if (write(fd, &p, size) != size) {
-		std::cerr << "EncodeAudio: error sending audio packet" << std::endl;
+		std::cerr << "Error sending audio packet" << std::endl;
 		return true;
 	}
+	return false;
+}
 
+bool CDV3000U::GetData(unsigned char *data, int framecount)
+{
+	DV3K_PACKET p;
 	// read data packet from DV3000
 	p.start_byte = 0U;
 	if (getresponse(&p))
@@ -269,7 +283,7 @@ bool CDV3000U::EncodeAudio(const short *audio, unsigned char *data, int framecou
 	if (p.start_byte!=DV3K_START_BYTE || htons(p.header.payload_length)!=11 ||
 			p.header.packet_type!=DV3K_TYPE_AMBE || p.field_id!=1U ||
 			p.payload.ambe.num_bits!=72U) {
-		std::cerr << "EncodeAudio: unexpected audio packet response" << std::endl;
+		std::cerr << "Error receiving audio packet response" << std::endl;
 		return true;
 	}
 
@@ -296,6 +310,15 @@ bool CDV3000U::EncodeAudio(const short *audio, unsigned char *data, int framecou
 
 bool CDV3000U::DecodeData(const unsigned char *data, short *audio)
 {
+	if (SendData(data))
+		return true;
+	if (GetAudio(audio))
+		return true;
+	return false;
+}
+
+bool CDV3000U::SendData(const unsigned char *data)
+{
 	// Create data packet
 	DV3K_PACKET p;
 	p.start_byte = DV3K_START_BYTE;
@@ -311,7 +334,12 @@ bool CDV3000U::DecodeData(const unsigned char *data, short *audio)
 		std::cerr << "DecodeData: error sending data packet" << std::endl;
 		return true;
 	}
+	return false;
+}
 
+bool CDV3000U::GetAudio(short *audio)
+{
+	DV3K_PACKET p;
 	// read audio packet from DV3000
 	p.start_byte = 0U;
 	if (getresponse(&p))
