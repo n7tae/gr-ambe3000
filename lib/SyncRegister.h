@@ -32,5 +32,4 @@ public:
 	void GetDataFrame(unsigned char *frame);
 private:
 	unsigned int data[3];	// 96 bits, 12 bytes
-	const unsigned char BitReverse(const unsigned char c);
 };

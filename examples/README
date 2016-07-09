@@ -1,20 +1,33 @@
 This directory contains several flow-graphs to get you going. Some that transmit RF obviously require an SDR with an rf sink, i.e., a transmitter. These examples use a UHD (I have an Ettus Research B200). If you have a different rf sink, you will need to change the example by removing the UHD and adding your rf sink.
 
-In general rf sinks will not work with any input sampling rate, so you may have to play with the examples a bit if gnuradio reports any trouble with setting clock rates. The error and warning messages do a good job of pointing you to the correct solution. If you use a transmitting flow-graph, you should have a amateur radio license.
+BEWARE, in general rf sinks will not work with any input sampling rate, so you may have to play with the examples a bit if gnuradio reports any trouble with setting clock rates. The error and warning messages do a good job of pointing you to the correct solution. You can insert a rational resampler to change the sample rate of any complex or float stream to make your hardware happy.
 
-You can't have both the encoder and the decoder in a single flowgraph, so make a transmitter or a receiver, but not a transceiver.
+BEWARE, ff you use a transmitting flow-graph, you should have an amateur radio license.
+
+BEWARE, you can't have both the encoder and the decoder in a single flowgraph, so make a transmitter or a receiver, but not a transceiver.
+
+The blocks:
+
+Dstar Decode - This module takes a byte input stream of zeros and ones (one bit per byte) and produces audio data in short ints with a 8000Hz rate. If a header is detected in the incoming stream, it's contents will be displayed. This module will also report when it has seen three different sync patterns:
+A) The header sync signifying that a 660 bit header follows.
+B) The data sync will only be reported if the audio frame header was not preceded by a header.
+C) The terminal sync showing that the audio stream is ending.
+
+DStar Encode - This module takes short int audio data sampled at 8000Hz and produces Dstar voice frame data. Currently no header is generated and no terminal sync is added at the end.
+
+Bit Reverse - This module will reverse the bits in an byte input stream. This block is not used in any flow graph supplied here but might be necessary if want to use a different modulator that starts from the LSB side of the byte.
 
 The examples:
 
-1. audio2file.grc – This flow-graph uses the "DStar Encode" module to convert the output of an audio source and writes the dstar data (just 600 bytes for each second of audio) to a named file. Start the flow-graph and when it runs speak into the default audio input. When you are done, click the “x” in the run window to stop. The dstar stream contains no header, no “slow data” and no terminating flag.
+1. audio2data.grc – This flow-graph uses the "DStar Encode" module to convert the output of an audio source and writes the dstar data (just 600 bytes for each second of audio) to a named file. Start the flow-graph and when it runs speak into the default audio input. When you are done, click the “x” in the run window to stop. The dstar stream written to the file sink contains no header, no “slow data” and no terminating flag.
 
-2. file2audio.grc – This uses the "DStar Decode" module to convert a named file as a source of dstar data. Currently this data may not contain a header. Any slow data will not be processed. Select the file and then start the flow-graph to hear the recorded audio.
+2. data2audio.grc – This uses the "DStar Decode" module to convert a named file as a source of dstar data. Currently Any slow data will not be processed. But the header, if present, will be displayed. Select the file and then start the flow-graph to hear the recorded audio. The examples folder already contains an example datafile called "dstarstream".
 
-3. file2rf.grc – This will read dstar data from a named file and send it to a UHD transmitting sink. Because the gnuradio GMSK modulators consume bytes from the least-significant side first, these modulators need to be preceded with the "Bit Reverse" block.
+3. data2rf.grc – This will read dstar data from a named file and send it to a UHD transmitting sink. Try the "dstarstream" data file in the examples directory.
 
-4. audio2rf.grc – This will take audio from the default audio source and encode it using dstar_encode_sb and send it to a UHD sink. Currently all I/O to the AMBE-3000 dongle is through blocking calls that greatly simplify the code. This comes at a price. Without the Delay block, the flow-graph will fail on my system with “U” buffer underflows reported by grc. Inserting just 24 null bytes of delay (two DV frames or 40 milliseconds) results in reliable operation. (Your mileage may vary, depending on you computer and its hardware.) I have the older dongle that can only operate at 230400 baud. If you have a newer dongle that operates at 460800 baud, you might be able to significantly reduce or completely eliminate the delay.
+4. audio2rf.grc – This will take audio from the default audio source and encode it using dstar_encode_sb and send it to a UHD sink. The delay block is present to ensure the input to the transmitter is satisfied while the block starts.
 
-I don’t yet have an rf2audio.grc flow-graph. I need to figure out how to sync the incoming bits from the GMSK demodulator to the DV audio frame sync flag. I’m still very much a novice student of gnuradio!
+5. DStarReceiver.grc - This is a functioning Dstar Receiver. Set a "freq" frequency and start the flow-grap to listen on that frequency. Header data in the incoming signal will be decoded and displayed. "Slow data" is currently ignored. The Rational Resampler just before the Audio Sync produces one extra data point in the audio stream to prevent the "aUaUaU..." "two-clock problem". See http://gnuradio.org/redmine/projects/gnuradio/wiki/FAQ#I-have-a-receiver-with-acoustic-output-and-keep-getting-aUaUaU-errors .
 
 
 

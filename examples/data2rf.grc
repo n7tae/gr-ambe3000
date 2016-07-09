@@ -109,45 +109,6 @@
     </param>
   </block>
   <block>
-    <key>ambe3000_bit_reverse_bb</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(424, 153)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ambe3000_bit_reverse_bb_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>blocks_file_source</key>
     <param>
       <key>alias</key>
@@ -167,11 +128,11 @@
     </param>
     <param>
       <key>file</key>
-      <value>/home/tom/projects/test/ambebits.2trim</value>
+      <value></value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(200, 85)</value>
+      <value>(336, 77)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -226,7 +187,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(616, 85)</value>
+      <value>(624, 77)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -289,7 +250,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(864, 182)</value>
+      <value>(888, 190)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1288,7 +1249,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(856, 64)</value>
+      <value>(888, 56)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1435,18 +1396,6 @@
       <value></value>
     </param>
   </block>
-  <connection>
-    <source_block_id>ambe3000_bit_reverse_bb_0</source_block_id>
-    <sink_block_id>digital_gmsk_mod_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_file_source_0</source_block_id>
-    <sink_block_id>ambe3000_bit_reverse_bb_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
   <connection>
     <source_block_id>blocks_file_source_0</source_block_id>
     <sink_block_id>digital_gmsk_mod_0</sink_block_id>

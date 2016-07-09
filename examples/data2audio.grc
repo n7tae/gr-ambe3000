@@ -128,7 +128,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(400, 93)</value>
+      <value>(520, 117)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -179,7 +179,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1000, 100)</value>
+      <value>(1096, 124)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -234,7 +234,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(768, 51)</value>
+      <value>(864, 75)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -242,7 +242,7 @@
     </param>
     <param>
       <key>gain</key>
-      <value>4</value>
+      <value>1</value>
     </param>
     <param>
       <key>high_cutoff_freq</key>
@@ -270,7 +270,7 @@
     </param>
     <param>
       <key>samp_rate</key>
-      <value>samp_rate</value>
+      <value>samp_rate/4</value>
     </param>
     <param>
       <key>width</key>
@@ -301,11 +301,11 @@
     </param>
     <param>
       <key>file</key>
-      <value>/home/tom/projects/opendv/RepeaterExtras/Data/en_US.ambe</value>
+      <value></value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(192, 93)</value>
+      <value>(120, 117)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -329,7 +329,7 @@
     </param>
     <param>
       <key>repeat</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>vlen</key>
@@ -356,7 +356,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(592, 100)</value>
+      <value>(704, 124)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -381,6 +381,49 @@
     <param>
       <key>vlen</key>
       <value>1</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_unpack_k_bits_bb</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(352, 124)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_unpack_k_bits_bb_0</value>
+    </param>
+    <param>
+      <key>k</key>
+      <value>8</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
     </param>
   </block>
   <block>
@@ -415,7 +458,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(992, 174)</value>
+      <value>(1096, 30)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -762,13 +805,19 @@
   </connection>
   <connection>
     <source_block_id>blocks_file_source_0</source_block_id>
-    <sink_block_id>ambe3000_dstar_decode_bs_0</sink_block_id>
+    <sink_block_id>blocks_unpack_k_bits_bb_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_short_to_float_0</source_block_id>
     <sink_block_id>band_pass_filter_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_unpack_k_bits_bb_0</source_block_id>
+    <sink_block_id>ambe3000_dstar_decode_bs_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
