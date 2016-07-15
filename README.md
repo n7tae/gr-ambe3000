@@ -6,7 +6,7 @@ This will build a gnuradion OOT (out-of-tree) module to encode and decode a DSta
 
 It uses the Northwest Digital Radio AMBE-3000 dongle (http://www.nwdigitalradio.com) to encode and decode between audio and DStar data. The encoder builds a DStar data stream from an 8000 sample/second, 16-bit integer audio stream. The decoder converts a DStar data stream to a 8000 sample/second, 16-bit integer audio stream.
 
-See the README file in the "examples" folder for an explanation of the example flow-graphs.
+Be sure to look at the README file in the "examples" folder for an explanation of the example flow-graphs as well as a description of the blocks in this module.
 
 ##Installation
 

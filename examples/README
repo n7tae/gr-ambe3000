@@ -12,6 +12,7 @@ Dstar Decode - This module takes a byte input stream of zeros and ones (one bit 
 A) The header sync signifying that a 660 bit header follows.
 B) The data sync will only be reported if the audio frame header was not preceded by a header.
 C) The terminal sync showing that the audio stream is ending.
+This block will also print data in the "slow data" portion of the voice frame. The header and the 20-character message will only be printed once per transmission.
 
 DStar Encode - This module takes short int audio data sampled at 8000Hz and produces Dstar voice frame data. Currently no header is generated and no terminal sync is added at the end.
 
