@@ -57,7 +57,7 @@ namespace gr {
     }
 
     void
-    dstar_decode_bs_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    dstar_decode_bs_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required)
     {
       ninput_items_required[0] = 96 * noutput_items / 160;
     }
@@ -74,18 +74,21 @@ namespace gr {
 	  if (device_is_closed)
 		return WORK_DONE;
       // Do <+signal processing+>
+      int count = 0;
       for (int i=0; i<noutput_items; i+=160) {
-		  if (dstarDecode.Process(in, out))
+		  int thistime = 160;
+		  if (dstarDecode.Process(in, out, thistime))
 			return WORK_DONE;
+			count += thistime;
 		  in += 96;
 		  out += 160;
 	  }
       // Tell runtime system how many input items we consumed on
       // each input stream.
-      consume_each (96 * noutput_items / 160);
+      consume_each(96 * noutput_items / 160);
 
       // Tell runtime system how many output items we produced.
-      return noutput_items;
+      return count;
     }
 
   } /* namespace ambe3000 */

@@ -28,7 +28,7 @@ The examples:
 
 4. audio2rf.grc – This will take audio from the default audio source and encode it using dstar_encode_sb and send it to a UHD sink. The delay block is present to ensure the input to the transmitter is satisfied while the block starts.
 
-5. DStarReceiver.grc - This is a functioning Dstar Receiver. Set a "freq" frequency and start the flow-grap to listen on that frequency. Header data in the incoming signal will be decoded and displayed. "Slow data" is currently ignored. The Rational Resampler just before the Audio Sync produces one extra data point in the audio stream to prevent the "aUaUaU..." "two-clock problem". See http://gnuradio.org/redmine/projects/gnuradio/wiki/FAQ#I-have-a-receiver-with-acoustic-output-and-keep-getting-aUaUaU-errors .
+5. DStarReceiver.grc - This is a functioning Dstar Receiver. Set a "freq" frequency and start the flow-grap to listen on that frequency. Header data in the incoming signal will be decoded and displayed. "Slow data" in the audio stream is also displayed. The 20-character message and the DStar header is only displayed once.
 
 
 

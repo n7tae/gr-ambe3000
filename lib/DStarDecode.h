@@ -29,7 +29,7 @@ public:
 	CDStarDecode();
 	~CDStarDecode();
 	bool OpenDevice(char *device, int baudrate);
-	bool Process(const unsigned char *in, short int *out);
+	bool Process(const unsigned char *in, short int *out, int &output_count);
 	void CloseDevice();
 private:
 	CDV3000U dv3000u;
@@ -41,4 +41,5 @@ private:
 	int index, voiceframecount;
 	short int audiobuffer[160];
 	bool audio_ready;
+	bool first_call;
 };
