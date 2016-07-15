@@ -30,6 +30,7 @@ list(APPEND ambe3000_sources
     DStarHeader.cc
     DStarDecode.cc
     SyncRegister.cc
+    SlowData.cc
     dstar_decode_bs_impl.cc
     bit_reverse_bb_impl.cc )
 

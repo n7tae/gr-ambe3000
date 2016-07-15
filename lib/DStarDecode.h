@@ -22,6 +22,7 @@
 
 #include "DV3000U.h"
 #include "SyncRegister.h"
+#include "SlowData.h"
 
 class CDStarDecode {
 public:
@@ -33,6 +34,7 @@ public:
 private:
 	CDV3000U dv3000u;
 	CSyncRegister sr;
+	CSlowData slowdata;
 
 	enum { headmode, datamode, nullmode } readmode;
 	unsigned char buffer[660];

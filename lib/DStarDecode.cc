@@ -24,6 +24,7 @@
 
 #include "DStarDecode.h"
 #include "DStarHeader.h"
+#include "SlowData.h"
 
 CDStarDecode::CDStarDecode() :
 	index(0),
@@ -65,12 +66,7 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 				CDStarHeader dsh(buffer);
 				// print the header
 				const char *h = dsh.GetHeader();
-				printf("DSTAR HEADER: ");
-				//printf("FLAG1: %02X - FLAG2: %02X - FLAG3: %02X\n", h[0], h[1], h[2]);
-				printf("MY: %c%c%c%c%c%c%c%c/%c%c%c%c ", h[27], h[28], h[29], h[30], h[31], h[32], h[33], h[34], h[35], h[36], h[37], h[38]);
-				printf("YOUR: %c%c%c%c%c%c%c%c ", h[19], h[20], h[21], h[22], h[23], h[24], h[25], h[26]);
-				printf("RPT1: %c%c%c%c%c%c%c%c ", h[11], h[12], h[13], h[14], h[15], h[16], h[17], h[18]);
-				printf("RPT2: %c%c%c%c%c%c%c%c\n", h[3], h[4], h[5], h[6], h[7], h[8], h[9], h[10]);
+				slowdata.SetHeader(h);
 				voiceframecount = index = 0;
 				readmode = datamode;
 			}
@@ -80,6 +76,7 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 		if (datamode == readmode) {
 			if (++index >= 96) {
 				sr.GetDataFrame(buffer);
+				slowdata.Add3(buffer+9, voiceframecount);
 				//printf("dataframe[%i]: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n", voiceframecount, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7], buffer[8], buffer[9], buffer[10], buffer[11]);
 				// voice frame is complete
 				if (sr.IsDataSync()) {	// is it a sync frame?
@@ -94,6 +91,8 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 						readmode = nullmode;
 					}
 				}
+				if (datamode != readmode)
+					slowdata.Reset();
 				if (dv3000u.DecodeData(buffer, audiobuffer))
 					return true;
 				audio_ready = true;
@@ -131,6 +130,7 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out)
 			printf("Got termsync flag!\n");
 			index = voiceframecount = 0;
 			readmode = nullmode;
+			slowdata.Reset();
 		}
 	}
 
