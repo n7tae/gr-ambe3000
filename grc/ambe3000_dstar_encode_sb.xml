@@ -2,7 +2,7 @@
 <block>
   <name>DStar Encode</name>
   <key>ambe3000_dstar_encode_sb</key>
-  <category>AMBE-3000 Dongle</category>
+  <category>[AMBE-3000 Dongle]</category>
   <import>import ambe3000</import>
   <make>ambe3000.dstar_encode_sb($device, $baudrate)</make>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
