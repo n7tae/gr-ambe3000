@@ -4,7 +4,7 @@
   <key>ambe3000_dstar_decode_bs</key>
   <category>[AMBE-3000 Dongle]</category>
   <import>import ambe3000</import>
-  <make>ambe3000.dstar_decode_bs($*device, $baudrate)</make>
+  <make>ambe3000.dstar_decode_bs($device, $baudrate)</make>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
        * name
