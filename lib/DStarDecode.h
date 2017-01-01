@@ -41,5 +41,5 @@ private:
 	int index, voiceframecount;
 	short int audiobuffer[160];
 	bool audio_ready;
-	bool first_call;
+	bool first_time;
 };

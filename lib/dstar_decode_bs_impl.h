@@ -25,28 +25,26 @@
 #include "DStarDecode.h"
 
 namespace gr {
-  namespace ambe3000 {
+	namespace ambe3000 {
 
-    class dstar_decode_bs_impl : public dstar_decode_bs
-    {
-     private:
-      CDStarDecode dstarDecode;
-      bool device_is_closed;
+		class dstar_decode_bs_impl : public dstar_decode_bs
+		{
+			private:
+				CDStarDecode dstarDecode;
+				bool device_is_closed;
 
-     public:
-      dstar_decode_bs_impl(char *device, int baudrate);
-      ~dstar_decode_bs_impl();
+			public:
+				dstar_decode_bs_impl(char *device, int baudrate);
+				~dstar_decode_bs_impl();
 
-      // Where all the action really happens
-      void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+				// Where all the action really happens
+				void forecast (int noutput_items, gr_vector_int &ninput_items_required);
 
-      int general_work(int noutput_items,
-           gr_vector_int &ninput_items,
-           gr_vector_const_void_star &input_items,
-           gr_vector_void_star &output_items);
-    };
+				int general_work(int noutput_items, gr_vector_int &ninput_items,
+					gr_vector_const_void_star &input_items, gr_vector_void_star &output_items);
+		};
 
-  } // namespace ambe3000
+	} // namespace ambe3000
 } // namespace gr
 
 #endif /* INCLUDED_AMBE3000_DSTAR_DECODE_BS_IMPL_H */

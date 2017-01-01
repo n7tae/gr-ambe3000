@@ -31,7 +31,7 @@ CDStarDecode::CDStarDecode() :
 	voiceframecount(0),
 	readmode(nullmode),
 	audio_ready(false),
-	first_call(true)
+	first_time(true)
 {
 }
 
@@ -57,11 +57,11 @@ bool CDStarDecode::Process(const unsigned char *in, short int *out, int &output_
 		memcpy(out, audiobuffer, output_count*sizeof(short));
 		audio_ready = false;
 	} else {
-		if (first_call) {
-			output_count = 640;
-			first_call = false;
+		if (first_time) {
+			output_count = 480;
+			first_time = false;
 		}
-		memset(out, 0, output_count*sizeof(short));
+		memset(out, 0, output_count * sizeof(short int));
 	}
 	for (int inp=0; inp<96; inp++) {
 		unsigned char bit = in[inp];
