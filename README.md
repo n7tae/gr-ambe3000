@@ -25,6 +25,12 @@ The "path_to_gnuradio_base" can be found with the command:
 gnuradio-config-info --prefix
 ```
 
+Because these ambe devices communicate through a /dev/tty* device, make sure you are in the `dialout` group:
+```
+sudo adduser <user> dialout
+```
+where `<user>` is your username. After you logout and log back in, you can use the device without problems.
+
 ##Updating
 
 You can see at the github.com repository if anything new has been uploaded. If it has, you can go back to the gr-ambe3000 directory and pull any new stuff with `git pull`. If new files are downloaded, the safest thing to do uninstall, rebuild and reinstall:
