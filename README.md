@@ -20,6 +20,7 @@ cmake -DCMAKE_INSTALL_PREFIX=path_to_gnuradio_base ../
 make
 sudo make install
 ```
+
 The "path_to_gnuradio_base" can be found with the command:
 ```
 gnuradio-config-info --prefix
