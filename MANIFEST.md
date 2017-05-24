@@ -35,4 +35,4 @@ I welcome comments and complaints, but moslty I welcome push notifications for i
 
 Thanks to the folks at NorthWest Digital Radio, especially ambeserver.c. If you find this software useful, it's because of them. If you don't, it's probably my fault!
 
-73 Tom AC2IE  <n7tae (at) arrl (dot) net
+73 Tom <n7tae (at) arrl (dot) net

@@ -59,4 +59,4 @@ Thanks to the folks at NorthWest Digital Radio (especially for their ambeserver.
 
 ##73
 
-Tom AC2IE - n7tae(at)arrl(dot)net
+Tom - n7tae(at)arrl(dot)net
