@@ -5,10 +5,10 @@ tags:
   - DStar
   - AMBE3000
 author:
-  - Thomas Early <ac2ie (at) arrl (dot) net>
+  - Thomas Early <n7tae (at) arrl (dot) net>
 copyright_owner:
   - Thomas A. Early
-repo: http://github.com/ac2ie/gr-ambe3000
+repo: http://github.com/n7tae/gr-ambe3000
 website: http://nwdigitalradio.com
 ---
 Uses the Northwest Digital Radio USB AMBE-3000 dongle to encode and decode between audio and DStar data. The encoder builds a DStar data stream from an 8000 sample/second, 16-bit integer audio stream. The decoder converts a DStar data stream to a 8000 sample/second, 16-bit integer audio stream.
@@ -19,7 +19,7 @@ See the README file in the examples directory for an explanation of the included
 
 Change to any folder in your home directory and enter following commands in your terminal.
 
-`git clone https://github.com/ac2ie/gr-ambe3000.git` // clone this repository  
+`git clone https://github.com/n7tae/gr-ambe3000.git` // clone this repository  
 `cd gr-ambe3000/`  
 `mkdir build` // make build folder  
 `cd build/`  
@@ -35,4 +35,4 @@ I welcome comments and complaints, but moslty I welcome push notifications for i
 
 Thanks to the folks at NorthWest Digital Radio, especially ambeserver.c. If you find this software useful, it's because of them. If you don't, it's probably my fault!
 
-73 Tom AC2IE  <ac2ie (at) arrl (dot) net
+73 Tom AC2IE  <n7tae (at) arrl (dot) net

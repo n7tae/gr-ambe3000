@@ -12,7 +12,7 @@ Be sure to look at the README file in the "examples" folder for an explanation o
 
 Change to any folder in your home directory and enter following commands in your terminal.
 ```
-git clone https://github.com/ac2ie/gr-ambe3000.git
+git clone https://github.com/n7tae/gr-ambe3000.git
 cd gr-ambe3000/ 
 mkdir build
 cd build/
@@ -59,4 +59,4 @@ Thanks to the folks at NorthWest Digital Radio (especially for their ambeserver.
 
 ##73
 
-Tom AC2IE - ac2ie(at)arrl(dot)net
+Tom AC2IE - n7tae(at)arrl(dot)net

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2014 by Jonathan Naylor G4KLX and John Hays K7VE
  *   Copyright 2016 by Jeremy McDermond (NH6Z)
- *   Copyright 2016 by Thomas Early AC2IE
+ *   Copyright 2016 by Thomas Early N7TAE
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
